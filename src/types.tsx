@@ -3,7 +3,7 @@ export interface usuarioType {
     nome: string
     email: string
     senha: string
-    data_nascimento: Date
+    nascimento: Date
 }
 
 export interface agendamentoType {

@@ -27,7 +27,7 @@ export function UsuarioProvider({ children }: UsuarioProviderProps) {
     const { getAgendamentos, getAgendamentosUsuario } = useContext(AgendamentoContext);
     const navigate = useNavigate();
 
-    const createUsuario = async (usuario: usuarioType) => {
+    const createUsuario = async (usuarioAux: usuarioType) => {
 
         try {
             const url = 'usuarios'
@@ -36,11 +36,14 @@ export function UsuarioProvider({ children }: UsuarioProviderProps) {
                 'Content-Type': 'application/json'
             }
 
-            Api.post(url, { usuario }, { headers }).then(response => {
+            Api.post(url, {email: usuarioAux.email, senha: usuarioAux.senha, 
+                nome: usuarioAux.nome, nascimento: usuarioAux.nascimento}, 
+                { headers }).then(response => {
                 console.log(response)
                 setUsuario(response.data)
                 getAgendamentos()
                 getAgendamentosUsuario(response.data.id)
+                navigate('/home');
 
             });
         } catch (error) {
@@ -58,7 +61,7 @@ export function UsuarioProvider({ children }: UsuarioProviderProps) {
 
             Api.put(url, {
                 id: usuario.id, nome: usuario.nome, email: usuario.email,
-                senha: usuario.senha, data_nascimento: usuario.data_nascimento
+                senha: usuario.senha, nascimento: usuario.nascimento
             }, { headers }).then(response => {
                 console.log(response)
             });

@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import { UsuarioContext } from "../contexts/UsuarioContext.tsx";
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
@@ -13,7 +15,11 @@ export default function Login() {
         e.preventDefault();
         console.log(email, password);
         getUsuario(email, password);
-        console.log(usuario);           
+        console.log(usuario);
+        toast.error('Usuário não encontrado!', {
+            position: "top-right",
+            theme: "light",
+        });         
     }
 
     const handleCadastro = () => {
@@ -23,6 +29,12 @@ export default function Login() {
     return (
 
         <>
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            closeOnClick
+            theme="light"
+            />
             <div className='w-full h-screen'>
                 <div className='w-screen px-20 py-7'>
                     
