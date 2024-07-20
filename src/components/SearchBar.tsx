@@ -8,7 +8,7 @@ export function SearchBar() {
             <input
                 type="text"
                 ref={searchInputRef}
-                className="border border-cinza-300 flex content-center justify-center rounded-19 h-[3.5rem] w-full bg-transparent px-6 text-lg placeholder:text-cinza-300 focus:shadow-none rounded-full focus:outline-none outline-none focus:border-transparent"
+                className="border border-cinza-300 flex content-center justify-center rounded-19 h-[3.5rem] w-full bg-transparent px-6 text-lg placeholder:text-cinza-300 text-branco focus:shadow-none rounded-full focus:outline-none outline-none focus:border-transparent"
                 placeholder="Pesquise postos de vacinação"
             />
         </div>

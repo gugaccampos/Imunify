@@ -9,7 +9,7 @@ export interface usuarioType {
 export interface agendamentoType {
     id: string
     nome: string
-    horario: Date
+    data_hora: Date
     nascimento: Date
     realizado: string
     idUsuario: string

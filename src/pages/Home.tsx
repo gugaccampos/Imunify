@@ -42,7 +42,7 @@ export default function Home() {
                             <div className='flex flex-col items-center justify-center h-[23.125rem] gap-2'>
                                 <img src="src\assets\32223.png" className=" w-24" />
                                 <h4 className=''>
-                                    Criar um novo Indicador
+                                    Hisórico do Usuário
                                 </h4>
                             </div>
 

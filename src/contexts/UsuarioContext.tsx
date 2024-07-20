@@ -41,6 +41,7 @@ export function UsuarioProvider({ children }: UsuarioProviderProps) {
                 { headers }).then(response => {
                 console.log(response)
                 setUsuario(response.data)
+                localStorage.setItem('usuario', JSON.stringify(response.data)); 
                 getAgendamentos()
                 getAgendamentosUsuario(response.data.id)
                 navigate('/home');
@@ -81,6 +82,7 @@ export function UsuarioProvider({ children }: UsuarioProviderProps) {
             Api.get(url).then(response => {
                 const user = response.data
                 setUsuario(user)
+                localStorage.setItem('user', JSON.stringify(user)); 
                 getAgendamentos();
                 getAgendamentosUsuario(user.id);
                 navigate('/home');

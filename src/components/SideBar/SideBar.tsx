@@ -10,11 +10,13 @@ export function SideBar(){
     const navigate = useNavigate();
     const { usuario, setUsuario } = useContext(UsuarioContext);
     const { agendamentosUsuario, setAgendamentosUsuario } = useContext(AgendamentoContext);
+    const usuarioLocal = JSON.parse(localStorage.getItem('user') || '{}');
 
     const handleLogout = () => {
         //console.log('logout');
         setUsuario({} as usuarioType);
         setAgendamentosUsuario([]);
+        localStorage.clear();
         console.log(usuario, agendamentosUsuario);
         navigate('/');
     }
@@ -46,8 +48,8 @@ export function SideBar(){
                 <div className="flex flex-col justify-between content-between mb-16">
 
                         <div className="userInfo font-black sans font text-lg">
-                            <p>{usuario.nome}</p>
-                            <p>{usuario.email}</p>
+                            <p>{usuarioLocal.nome}</p>
+                            <p>{usuarioLocal.email}</p>
                         </div>
 
                     <div className="SideBarItem mt-14">

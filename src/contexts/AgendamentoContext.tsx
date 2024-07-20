@@ -56,7 +56,7 @@ export function AgendamentoProvider({ children }: AgendamentoProviderProps) {
             }
 
             Api.put(url, {
-                id: agendamento.id, nome: agendamento.nome, horario: agendamento.horario,
+                id: agendamento.id, nome: agendamento.nome, data_hora: agendamento.data_hora,
                 nascimento: agendamento.nascimento, realizado: agendamento.realizado, idUsuario: agendamento.idUsuario
             }, { headers }).then(response => {
                 console.log(response)
@@ -77,6 +77,7 @@ export function AgendamentoProvider({ children }: AgendamentoProviderProps) {
             Api.get(url).then(response => {
                 const res = response.data
                 setAgendamentos(res)
+                localStorage.setItem('agendamentos', JSON.stringify(res));
 
                 })
                 console.log(agendamentos)
@@ -96,6 +97,7 @@ export function AgendamentoProvider({ children }: AgendamentoProviderProps) {
             Api.get(url).then(response => {
                 const res = response.data
                 setAgendamentosUsuario(res)
+                localStorage.setItem('agendamentosUsuario', JSON.stringify(res));
 
                 })
                 console.log(agendamentosUsuario)
