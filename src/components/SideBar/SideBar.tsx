@@ -38,7 +38,7 @@ export function SideBar(){
                     </div>
                     
                     <div className="SideBarItem">
-                        <Link to={"/profile"}>
+                        <Link to={"/historico"}>
                             <ButtonSB pathIcon={"src/components/SideBar/assets/IconMeuPerfil.png"} buttonText={'Historico'}/>
                         </Link>
                     </div>

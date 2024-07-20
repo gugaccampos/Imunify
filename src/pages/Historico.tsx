@@ -1,12 +1,26 @@
 import { agendamentoType } from "../types";
 import { SearchBar } from "../components/SearchBar"
 import { SideBar } from "../components/SideBar/SideBar"
+import { AgendamentoContext } from "../contexts/AgendamentoContext";
+import { useContext } from "react";
+import Modal from "../components/Modal";
 
 
 export default function Historico() {
     const agendamentosUsuario = JSON.parse(localStorage.getItem('agendamentosUsuario') || '[]');
-    const teste = async (testado: Date) => {
-        console.log(testado)
+    const { updateAgendamento, setOpenModal } = useContext(AgendamentoContext);
+    const upRealizou = async (agendamento: agendamentoType) => {
+        agendamento.realizado = 'Sim';
+        console.log(agendamento)
+        updateAgendamento(agendamento);
+        setOpenModal(true);
+    }
+
+    const upFaltou = async (agendamento: agendamentoType) => {
+        agendamento.realizado = 'Não';
+        console.log(agendamento)
+        updateAgendamento(agendamento);
+        setOpenModal(true);
     }
 
     return (
@@ -19,18 +33,26 @@ export default function Historico() {
                     {agendamentosUsuario.map((agendamento: agendamentoType, index: number) => (
                         <li key={index} className="list-none">
                             <div className="">
-                                <div className="w-[25rem] h-[25rem] rounded-3xl bg-white text-preto leading-tight">
+                                <div className="w-[25rem] h-[25rem] rounded-3xl bg-white text-preto leading-tight flex flex-col items-center justify-center">
                             
-                                    <button className=' rounded-10 h-[20rem] w-[25rem] hover' onClick={() => teste(agendamento.data_hora)}>
+                                    <div className='rounded-10 h-[20rem] w-[25rem] hover flex flex-col items-center justify-center'>
                                         
                                         <div className='flex flex-col items-center justify-center h-[23.125rem] gap-2'>
-                                            <h4 className='text-2xl font-semibold'>Vacinou-se: {agendamento.realizado}</h4>
+                                            {agendamento.realizado ? (
+                                                <h4 className='text-2xl font-semibold'>Vacinou-se: {agendamento.realizado}</h4>
+                                            ) : (
+                                                <div className="flex justify-around w-[22rem] pb-10">
+                                                    <button onClick={() => upRealizou(agendamento)} className="w-[10rem] h-[5rem] rounded-3xl bg-lime-500 text-brano leading-tight flex flex-col items-center justify-center hover:border-blue-800 hover:border-4 hover:scale-[1.05]">Realizou</button>
+                                                    <button onClick={() => upFaltou(agendamento)} className="w-[10rem] h-[5rem] rounded-3xl bg-vermelho-500 text-brano leading-tight flex flex-col items-center justify-center hover:border-blue-800 hover:border-4 hover:scale-[1.05]">Faltou</button>
+                                                </div>
+                                            )}
+                                            
                                             <p className="text-lg">Nome: {agendamento.nome}</p>
                                             <p className="text-lg">Nascimento: {agendamento.nascimento ? new Date(agendamento.nascimento).toLocaleDateString() : 'Data não disponível'}</p>
-                                            <p className="text-xl">{agendamento.data_hora ? new Date(agendamento.data_hora).toString() : 'Data não disponível'}</p>
+                                            <p className="text-xl ml-4">{agendamento.data_hora.toString()}</p>
                                         </div>
 
-                                    </button>
+                                    </div>
 
                                 </div>
                             </div>
@@ -38,6 +60,7 @@ export default function Historico() {
                     ))}
                 </div>
             </div>
+            <Modal message={'Agendamento atualizado com sucesso!'}></Modal>
         </div>
     );
 }

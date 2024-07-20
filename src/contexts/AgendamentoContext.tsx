@@ -34,12 +34,21 @@ export function AgendamentoProvider({ children }: AgendamentoProviderProps) {
             const headers = {
                 'Content-Type': 'application/json'
             }
+            console.log(agendamento)
 
-            Api.post(url, { agendamento }, { headers }).then(response => {
+            Api.post(url, { nome:agendamento.nome, data_hora:agendamento.data_hora, 
+                nascimento:agendamento.nascimento, idUsuario:agendamento.idUsuario }, { headers }).then(response => {
                 console.log(response)
                 setAgendamentos([...agendamentos, response.data])
                 setAgendamentosUsuario([...agendamentosUsuario, response.data])
-                //getAgendamentos(agendamento.id)
+
+                const currentData = JSON.parse(localStorage.getItem('agendamentos') || '[]');
+                const updatedData = [...currentData, response.data];
+                localStorage.setItem('agendamentos', JSON.stringify(updatedData));
+
+                const currentData2 = JSON.parse(localStorage.getItem('agendamentosUsuario') || '[]');
+                const updatedData2 = [...currentData2, response.data];
+                localStorage.setItem('agendamentosUsuario', JSON.stringify(updatedData2));
 
             });
         } catch (error) {
@@ -60,6 +69,11 @@ export function AgendamentoProvider({ children }: AgendamentoProviderProps) {
                 nascimento: agendamento.nascimento, realizado: agendamento.realizado, idUsuario: agendamento.idUsuario
             }, { headers }).then(response => {
                 console.log(response)
+                setAgendamentos(agendamentos.map(agendamentoMap => agendamentoMap.id === agendamento.id ? agendamento : agendamentoMap))
+                setAgendamentosUsuario(agendamentosUsuario.map(agendamentoMap => agendamentoMap.id === agendamento.id ? agendamento : agendamentoMap))
+                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+                localStorage.setItem('agendamentosUsuario', JSON.stringify(agendamentosUsuario));
+                
             });
 
         } catch (error) {

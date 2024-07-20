@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import { SearchBar } from "../components/SearchBar"
 import { SideBar } from "../components/SideBar/SideBar"
+import { useContext, useEffect } from "react"
+import { AgendamentoContext } from "../contexts/AgendamentoContext"
 
 export default function Home() {
     const Navigate = useNavigate()
+    const { agendamentos, agendamentosUsuario} = useContext(AgendamentoContext);  
     
     const openAgendar = async () => {
         Navigate('/agendamento')
@@ -12,6 +15,12 @@ export default function Home() {
     const openHistorico = async () => {
         Navigate('/historico')
     }
+
+    useEffect(() => {
+        localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+        localStorage.setItem('agendamentosUsuario', JSON.stringify(agendamentosUsuario));
+
+    }, [agendamentos, agendamentosUsuario]);
 
     return (
         
@@ -28,7 +37,7 @@ export default function Home() {
                             <div className='flex flex-col items-center justify-center h-[23.125rem] gap-2'>
                                 <img src="src\assets\add.png" alt="add_button" />
                                 <h4 className=''>
-                                    Criar um novo Indicador
+                                    Criar um novo Agendamento
                                 </h4>
                             </div>
 
